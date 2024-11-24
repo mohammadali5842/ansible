@@ -1,0 +1,7 @@
+---
+# handlers file for tomcat10
+- name: runTomcat
+  service:
+    name: tomcat
+    state: start
+  become: yes  

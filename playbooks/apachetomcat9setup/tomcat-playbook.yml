@@ -1,0 +1,30 @@
+---
+- name: tomcat play
+  hosts: all
+  vars:
+    TOMCAT_DOWNLOAD_URL: 'https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.65/bin/apache-tomcat-9.0.65.tar.gz'
+  tasks:
+  - name: install jdk11
+    apt:
+      name: openjdk-11-jdk
+      state: present
+      update_cache: true
+    become: yes
+  - name: download tomcat9 binary
+    get_url: 
+      url: "{{TOMCAT_DOWNLOAD_URL}}"
+      dest: /home/vagrant
+      mode: '0755'
+  - name: unzip tomcat
+    unarchive:
+      src: /home/vagrant/apache-tomcat-9.0.65.tar.gz
+      dest: /home/vagrant
+      remote_src: true
+  - name: start tomcat9
+    shell: /home/vagrant/apache-tomcat-9.0.65/bin/catalina.sh run 2>&1 | grep "java.net.BindException"
+    register: tomcatstatus
+    changed_when: "'Address already in use' not in tomcatstatus.stdout"
+  - name: tomcat status
+    debug:
+      msg: "{{tomcatstatus}}"  
+...

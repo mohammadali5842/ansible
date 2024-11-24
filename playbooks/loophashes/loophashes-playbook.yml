@@ -1,0 +1,13 @@
+---
+- name: loop over hash of values play
+  hosts: all
+  tasks: 
+  - name: create files with perm
+    file:
+      path: "{{item.filepath}}"
+      mode: "{{item.mode}}"
+      state: touch
+    loop:
+      - {filepath: "~/ledger-book.txt", mode: '0755'}
+      - {filepath: "~/cash-book.txt", mode: '0645'}
+      - {filepath: "~/daily-book.txt", mode: '0640'}

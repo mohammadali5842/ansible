@@ -1,0 +1,13 @@
+---
+- name: apply strategy play
+  hosts: all
+  strategy: linear
+  serial: 2
+  tasks:
+  - name: debug
+    debug:
+      msg: running1 
+  - name: debug
+    debug:
+      msg: running2   
+...

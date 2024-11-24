@@ -1,0 +1,24 @@
+---
+- name: condition on register variables play
+  vars:
+    middlewareDirectory: middleware
+    TOMCAT_DOWNLOAD_URL: 'https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.65/bin/apache-tomcat-9.0.65.tar.gz'
+  hosts: all
+  tasks:
+  - name: create middleware directory
+    file:
+      path: "~/{{middlewareDirectory}}"
+      state: directory
+  - name: find apache tomcat installation status
+    find:
+      paths: "~/{{middlewareDirectory}}"
+      patterns: "apache-tomcat-*"
+      recurse: no
+      use_regex: yes
+    register: tomcatstatus
+  - name: download tomcat
+    get_url:
+      url: "{{TOMCAT_DOWNLOAD_URL}}"
+      dest: "~/{{middlewareDirectory}}"
+    when: tomcatstatus.matched == 0
+...

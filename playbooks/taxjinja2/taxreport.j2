@@ -1,0 +1,12 @@
+Dear {{person}},
+Your gross earnings per annum is : {{earnings}}, so you need to pay a tax of percentage: 
+{% if earnings >= 800000 %}
+    30%
+{% elif earnings >= 500000 %}    
+    20%
+{% elif earnings >= 300000 %}
+    10%
+{% else %}
+    0%
+{% endif %}
+on your gross salary

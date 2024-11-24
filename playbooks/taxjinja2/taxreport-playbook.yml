@@ -1,0 +1,12 @@
+---
+- name: jinja2 play
+  hosts: all
+  vars:
+    person: alex
+    earnings: 900000
+  tasks:
+  - name: generate tax report
+    template:
+      src: taxreport.j2
+      dest: taxreport.txt  
+...

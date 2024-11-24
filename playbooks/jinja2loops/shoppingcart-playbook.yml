@@ -1,0 +1,17 @@
+---
+- name: loops play
+  hosts: all
+  vars:
+    items:
+    - groundnuts
+    - oil
+    - salt
+    - lux soaps
+    - sugar
+    - jaggery
+  tasks:
+  - name: shoppingcart
+    template:
+      src: shoppingcart.j2
+      dest: shoppingcart.txt    
+...

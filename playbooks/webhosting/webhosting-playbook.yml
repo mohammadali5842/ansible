@@ -1,0 +1,81 @@
+---
+- name: webhosting
+  hosts: all
+  tasks:
+  - name: install apache2 server
+    apt:
+      name: apache2
+      state: present
+      update_cache: yes
+    become: yes
+  - name: copy site to docRoot
+    copy:
+      src: public_html/{{docRoot}}
+      dest: /var/www/
+      mode: '0644'
+    become: yes
+  - name: create site configuration file
+    template:
+      src: default.conf.j2
+      dest: /etc/apache2/sites-available/{{docRoot}}.conf
+      mode: '0655'
+    become: yes  
+  - name: enable apache2 site
+    shell: a2ensite {{docRoot}}
+    become: yes
+    register: a2ensiteStatus
+    changed_when: a2ensiteStatus.stdout not in 'Site {{docRoot}} already enabled'
+    notify:
+      - reloadApache2
+      - restartApache2
+  handlers:
+  - name: reloadApache2
+    service:
+      name: apache2
+      state: reloaded
+    become: yes
+  - name: restartApache2
+    service:
+      name: apache2
+      state: restarted  
+...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

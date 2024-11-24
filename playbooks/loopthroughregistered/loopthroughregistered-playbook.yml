@@ -1,0 +1,20 @@
+---
+- name: loop through registered variable
+  hosts: all
+  tasks:
+  - name: copy products
+    copy:
+      src: products.txt
+      dest: ~/
+      mode: '0644'
+  - name: show products
+    shell: cat ~/products.txt
+    register: productlist
+  - name: show shoes
+    debug:
+      msg: "{{item}}"    
+    loop: "{{productlist.stdout_lines}}"
+    when: "item in 'shoes'"
+
+
+...

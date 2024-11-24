@@ -1,0 +1,14 @@
+---
+- name: condition on user vars play
+  hosts: all
+  vars:
+    jdk_pkg: openjdk-14-jdk
+  tasks:
+  - name: pick jdk based on env
+    set_fact:
+      jdk_pkg: openjdk-11-jdk
+    when: env == "dev"
+  - name: print jdk package
+    debug:
+      msg: "{{jdk_pkg}}"  
+...

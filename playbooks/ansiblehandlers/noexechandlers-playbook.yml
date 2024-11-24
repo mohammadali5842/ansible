@@ -1,0 +1,12 @@
+---
+- name: by default handlers will not be executed play
+  hosts: all
+  tasks:
+  - name: debug
+    debug:
+      msg: debug task
+  handlers:
+  - name: handler
+    debug:
+      msg: handler      
+...

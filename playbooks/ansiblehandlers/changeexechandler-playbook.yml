@@ -1,0 +1,22 @@
+---
+- name: a change triggers an handler execution
+  hosts: all
+  tasks:
+  - name: logged in user
+    shell: whoami
+    register: logInUser
+    notify:
+      - showUserHandler
+  - name: pull ip address
+    shell: hostname -I
+    register: ip
+    notify:
+      - showIpHandler
+  handlers:
+  - name: showUserHandler
+    debug:
+      msg: "logged in user : {{logInUser}}"        
+  - name: showIpHandler
+    debug:
+      msg: "ip address: {{ip}}"    
+...      

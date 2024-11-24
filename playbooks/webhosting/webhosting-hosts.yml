@@ -1,0 +1,10 @@
+---
+all:
+  hosts:
+    192.168.10.5:
+      serverName: www.crazyeats.com
+      docRoot: crazyeats
+    192.168.10.6:
+      serverName: www.toyland.com
+      docRoot: toyland        
+...    

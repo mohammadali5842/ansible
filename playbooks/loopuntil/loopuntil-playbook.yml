@@ -1,0 +1,28 @@
+---
+- name: loop until
+  hosts: all
+  tasks:
+  - name: copy programs
+    copy: 
+      src: "{{item}}"
+      dest: "~/"
+      mode: '0644'
+    loop:
+      - program1.sh
+      - program2.sh
+  - name: run program1
+    shell: "bash ~/program1.sh &"       
+  - name: wait for log
+    find:
+      paths: "~/"  
+      patterns: "program1.log"
+      recurse: false
+      use_regex: true
+    register: findstatus
+    until: findstatus.matched == 1
+    delay: 2
+    retries: 11
+  - name: run program2
+    shell: "bash ~/program2.sh"
+
+...

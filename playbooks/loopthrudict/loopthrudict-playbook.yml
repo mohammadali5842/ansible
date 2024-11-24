@@ -1,0 +1,16 @@
+---
+- name: loop thru dictionaries
+  hosts: all
+  vars:
+    stories:
+      us1: 2
+      us2: 1
+      us3: 5
+      us4: 3
+  tasks:
+  - name: loop thru dictionaries
+    debug:
+      msg: "story no: {{item.key}} and story points: {{item.value}}"
+    loop: "{{stories | dict2items}}"
+
+...

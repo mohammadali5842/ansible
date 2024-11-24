@@ -1,0 +1,11 @@
+---
+- name: jinja2 play
+  hosts: all
+  vars:
+    PERSON: joe
+  tasks:
+  - name: generate email content
+    template:
+      src: welcomeemail.j2
+      dest: welcomeemail.txt
+...

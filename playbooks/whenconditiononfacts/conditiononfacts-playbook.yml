@@ -1,0 +1,19 @@
+---
+- name: condition on facts variables
+  hosts: all
+  vars:
+    vscode_debain_file_url: https://code.visualstudio.com/docs/?dv=linux64_deb 
+    vscode_redhat_file_url: https://code.visualstudio.com/docs/?dv=linux64_rpm
+  tasks:
+  - name: download vscode on debain
+    get_url:
+      url: "{{vscode_debain_file_url}}"  
+      dest: /tmp
+    when: ansible_facts['os_family'] == "Debian"
+  - name: download vscode on redhat
+    get_url:
+      url: "{{vscode_redhat_file_url}}"  
+      dest: /tmp
+    when: ansible_facts['os_family'] == "RedHat"
+    
+...
